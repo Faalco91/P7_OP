@@ -5,7 +5,7 @@ const http = require('http');
 const app = require('./app');
 
 // Cette fonction normalise le port sur lequel le serveur va écouter. Si un numéro de port est spécifié dans les variables d'environnement (process.env.PORT), il sera utilisé. 
-//Sinon, le port 3000 sera utilisé par défaut.
+//Sinon, le port 4000 sera utilisé par défaut.
 const normalizePort = val => {
     const port = parseInt(val, 10);
   
@@ -19,7 +19,7 @@ const normalizePort = val => {
   };
 
   //On determine le port sur lequel le serveur écoutera en utilisant la fonction normalizePort.
-  const port = normalizePort(process.env.PORT || '3000');
+  const port = normalizePort(process.env.PORT || '4000');
 
   //On indique à l'application Express sur quel port elle doit écouter en utilisant la méthode "set".
   app.set('port', port);

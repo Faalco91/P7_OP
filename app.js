@@ -1,15 +1,24 @@
+//On importe express dans une constante
 const express = require('express');
-const app = express();
-const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const mongoose =  require('mongoose'); 
+const stuffRoutes = require('./routes/stuff');
+const userRoutes = require('./routes/user');
+const path = require('path');
 
-mongoose.connect('mongodb+srv://Faalco:Maghrib212@cluster0.cukera3.mongodb.net/?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://Faalco:Maghrib212@cluster0.5kfceaj.mongodb.net/?retryWrites=true&w=majority',
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
+//On créer une constante qui sera notre application et on y appel express afin de créer une application express
+
+
+
+const app = express();
 
 app.use(express.json());
-
+//.use permet d'intercepter  toute les requetes
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -17,12 +26,9 @@ app.use((req, res, next) => {
     next();
   });
 
-app.use('/api/stuff' ,(req, res, next) => {
-    console.log('req.body');
-    res.status(201).json({
-        message: 'Objet crée !'
-    });
-});
+app.use(bodyParser.json());
+app.use('/api/books', stuffRoutes);
+app.use('/api/auth', userRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
-//On exporte cette constante app afin de pouvoir l'utiliser depuis nos autres fichiers notamment dans notre serveur node (server.js)
 module.exports = app;

@@ -11,7 +11,13 @@ exports.createBook = (req, res, next) => {
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
     book.save()
-    .then(() => { res.status(201).json({message: 'Livre enregistré !'})})
+    .then((book) => { 
+        if (book.userId != req.auth.userId) {
+            res.status(403).json({ message: 'unauthorized request' });
+        } else {
+            res.status(201).json({message: 'Livre enregistré !'})
+        }
+    })
     .catch( error => {res.status(400).json({error})})
 };
 
@@ -57,7 +63,7 @@ exports.createBookRating = (req, res, next) => {
             return book.save();
         })
         .then(updatedBook => {
-            res.status(200).json({ message: 'Note ajoutée avec succès.', book: updatedBook, id: updatedBook._id });
+            res.status(200).json(upd);
         })
         .catch(error => {
             res.status(500).json({ error: 'Erreur lors de l\'ajout de la note.' });
@@ -113,7 +119,7 @@ exports.modifyOneBook = (req, res, next) => {
     Book.findOne({_id: req.params.id})
     .then((book) => {
         if (book.userId != req.auth.userId) {
-            res.status(401).json({ message : 'Not authorized'});
+            res.status(403).json({ message : 'unauthorized request'});
         } else {
             Book.updateOne({ _id: req.params.id}, { ...bookObject, _id: req.params.id})
             .then(() => res.status(200).json({message : 'Objet modifié!'}))
@@ -127,7 +133,7 @@ exports.deleteOneBookRating = (req, res, next) => {
     Book.findOne({_id: req.params.id})
     .then(book => {
             if (book.userId != req.auth.userId) {
-                res.status(401).json({message: 'Non-authorisé'});
+                res.status(403).json({message: 'unauthorized request'});
             } else {
                 const filename = book.imageUrl.split('/images/')[1];
                 fs.unlink(`images/${filename}`, () => {

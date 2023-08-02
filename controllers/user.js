@@ -27,7 +27,9 @@ exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
     .then(user => {
         if (user === null) {
-            res.status(401).json({message: 'Email ou identifiant incorrect !'});
+            res.status(401).json({message: 'Email ou identifiant incorrect !', 
+            info: { email : req.body.email, password: req.body.password } 
+        });
         } else {
             bcrypt.compare(req.body.password, user.password)
             .then( valid => { 

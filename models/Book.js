@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-//On créer notre schema de données auquels on passe un objet, les differents champs, dont notre schema aura besoin.
 //Le schema de Mongoose permet de créer un schéma de données pour notre base de données MongoDB.
 const bookSchema = mongoose.Schema({
 
@@ -18,6 +17,6 @@ const bookSchema = mongoose.Schema({
 
 });
 
-//Pour exploiter ce schema, (le lire, l'enregistrer dans la base de données), on utilise la méthode suivante.
+//Pour exploiter ce schema, (le lire, l'enregistrer dans la base de données), on utilise la méthode suivante:
 //Le premier argument est le nom du type de model, le deuxieme est le nom du schema de données.
 module.exports = mongoose.model('Book', bookSchema);

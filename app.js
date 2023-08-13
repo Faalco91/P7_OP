@@ -11,10 +11,9 @@ mongoose.connect('mongodb+srv://Faalco:Maghrib212@cluster0.5kfceaj.mongodb.net/?
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
+
+  
 //On créer une constante qui sera notre application et on y appel express afin de créer une application express
-
-
-
 const app = express();
 
 app.use(express.json());

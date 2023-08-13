@@ -18,7 +18,7 @@ exports.createBook = (req, res, next) => {
             res.status(201).json({message: 'Livre enregistré !'})
         }
     })
-    .catch( error => {res.status(400).json({error})})
+    .catch( error => res.status(400).json({error}));
 };
 
 exports.createBookRating = (req, res, next) => {
@@ -65,9 +65,7 @@ exports.createBookRating = (req, res, next) => {
         .then(updatedBook => {
             res.status(200).json(upd);
         })
-        .catch(error => {
-            res.status(500).json({ error: 'Erreur lors de l\'ajout de la note.' });
-        });
+        .catch(error => res.status(500).json({error}));
 };
 
 exports.getAllBooks = (req, res, next) => {
@@ -77,9 +75,6 @@ exports.getAllBooks = (req, res, next) => {
 };
 
 exports.getOneBook = (req, res, next) => {
-    /*Book.findOne({_id: req.paramas.auth.id})
-    .then((book) => res.status(200).json(book))
-    .catch(error => res.status(400).json({error}));*/
     Book.findOne({ _id: req.params.id }) // Recherche par le champ userId
       .then(book => {
         if (!book) {
@@ -126,7 +121,7 @@ exports.modifyOneBook = (req, res, next) => {
             .catch(error => res.status(401).json({ error }));
         }
     })
-    .catch(error => {res.status(400).json({error})});
+    .catch(error => res.status(400).json({error}));
 };
 
 exports.deleteOneBookRating = (req, res, next) => {

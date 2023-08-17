@@ -8,7 +8,8 @@ exports.createBook = (req, res, next) => {
     const book = new Book ({
         ...bookObject,
         userId: req.auth.userId,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        //on recupère l'image dans le sous-dossier compressed pour justement n'afficher que les images compresser par sharp dans le site.
+        imageUrl: `${req.protocol}://${req.get('host')}/images/compressed/${req.file.filename}`
     });
     book.save()
     .then((book) => { 

@@ -108,7 +108,7 @@ exports.getBooksBestRating = (req, res, next) => {
 exports.modifyOneBook = (req, res, next) => {
     const bookObject = req.file ? {
         ...JSON.parse(req.body.book),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        imageUrl: `${req.protocol}://${req.get('host')}/images/compressed/${req.file.filename}`
     } : {...req.body};
     //console.log(bookObject);
     delete bookObject._userId;
